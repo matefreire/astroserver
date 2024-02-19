@@ -1,0 +1,108 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+//enums 
+enum Access_level {
+  ADMIN //Admin
+  USER //User
+}
+
+model User {
+  id               String             @id @default(uuid())
+  name             String
+  email            String             @unique @db.Text
+  password         String
+  confirm_password String
+  picture          String?            @db.Text
+  access_level     Access_level       @default(USER)
+  posts            Post[]
+  astronomers      User_astronomers[]
+  comments         Comment[]
+  createdAt        DateTime           @default(now())
+  deletedAt        DateTime?
+}
+
+enum Is_accepted {
+  YES
+  NO
+}
+
+enum Post_type {
+  NOTICIA
+  POST
+  EVENTO
+  FOTOGRAFIA
+  DICAS
+  PERGUNTA
+  OUTRO
+}
+
+model Post {
+  id          String      @id @default(uuid())
+  title       String
+  description String
+  is_accepted Is_accepted @default(NO)
+  picture     String?     @db.Text
+  type        Post_type   @default(POST)
+  user        User        @relation(fields: [userId], references: [id])
+  userId      String
+  comments    Comment[]
+}
+
+model Astronomer {
+  id        String             @id @default(uuid())
+  name      String             @unique
+  picture   String             @db.Text
+  fallowers User_astronomers[]
+}
+
+model User_astronomers {
+  userId       String
+  astronomerId String
+  user         User       @relation(fields: [userId], references: [id])
+  astronomer   Astronomer @relation(fields: [astronomerId], references: [id])
+
+  @@id([userId, astronomerId])
+}
+
+model Comment {
+  id          String @id @default(uuid())
+  description String
+  userId      String
+  postId      String
+  user        User   @relation(fields: [userId], references: [id])
+  post        Post   @relation(fields: [postId], references: [id])
+}
+
+model Picture {
+  id      String @id @default(uuid())
+  title   String @db.Text
+  picture String @db.Text
+}
+
+enum Curiosity_type {
+  SISTEMA_SOLAR
+  ESTRELAS_GALAXIAS
+  HISTORIA_ASTRONOMIA
+  EXPLORACAO_ESPACIAL
+  FENOMENOS_CELESTES
+  ASTRONOMIA_CULTURAL
+  VIDA_EXTRATERRESTRE
+}
+
+model Curiosity {
+  id          String         @id @default(uuid())
+  title       String
+  description String
+  picture     String?
+  type        Curiosity_type
+}
