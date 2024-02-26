@@ -1,9 +1,13 @@
 import { Request, Response } from "express";
+import registerUserService from "../services/users/registerUserService";
 
-const registerUserControllers = (req: Request, res: Response): Promise<Response> => {
+const registerUserControllers = async(req: Request, res: Response): Promise<Response<void>> => {
 
     const reqBody = req.body 
-    const createdUser = 
+    const createdUser = await registerUserService(reqBody)
+
 
     return res.status(200).json(createdUser)
 }
+
+export {registerUserControllers}

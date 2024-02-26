@@ -3,8 +3,9 @@ import express from "express"
 import { PrismaClient } from "@prisma/client"
 import { userRoute } from "./routes/user.route"
 
-// import { handleError } from "./error"
-// import "express-async-errors"
+import { handleError } from "./error"
+
+import "express-async-errors"
 
 export const db = new PrismaClient()
 
@@ -14,6 +15,6 @@ app.use(express.json())
 
 app.use('/users', userRoute)
 
-// app.use(handleError)
+app.use(handleError)
 
 export default app
