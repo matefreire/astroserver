@@ -21,7 +21,6 @@ model User {
   name             String
   email            String             @unique @db.Text
   password         String
-  confirm_password String
   picture          String?            @db.Text
   access_level     Access_level       @default(USER)
   posts            Post[]

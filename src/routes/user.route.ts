@@ -1,8 +1,12 @@
 import { Router } from "express";
-import { registerUserControllers } from "../controllers/users.controllers";
-import { ensureBody } from "../middlewares/ensureBody.middleware";
-import { ensureSchema } from "../middlewares/ensureSchema.middleware";
+
+import { registerUserControllers } from "@/controllers/users.controllers";
+
+import { ensureSchema } from "@/middlewares/ensureSchema.middleware";
+
+
+import { userRegisterSchema } from "@/schemas/user.schemas";
 
 export const userRoute: Router = Router()
 
-userRoute.post('/register', ensureBody, ensureSchema, registerUserControllers)
+userRoute.post('/register', ensureSchema(userRegisterSchema), registerUserControllers)

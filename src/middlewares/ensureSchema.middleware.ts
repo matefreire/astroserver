@@ -1,12 +1,13 @@
 import { NextFunction, Request, Response } from "express";
-import { ZodType } from "zod";
+import { ZodTypeAny } from "zod";
+import { AppError } from "../error";
 
-const ensureSchema = (schema: ZodType) => (req: Request, res:Response, next: NextFunction) => {
- 
-    const parsedSchema = schema.parse(req.body)
-    req.body = parsedSchema
-
-    next()
-}
-
-export {ensureSchema}
+export const ensureSchema =
+  (schema: ZodTypeAny) => (req: Request, res: Response, next: NextFunction) => {
+    if (!req.body){
+      throw new AppError("Body necessary", 400)
+    } 
+    const newSchema = schema.parse(req.body);
+    req.body = newSchema
+    next();
+  }

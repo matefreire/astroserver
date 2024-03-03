@@ -1,9 +1,9 @@
-import { UserType } from "../../types/model.types";
+import { userRegister } from "@/types/user.types";
 
-const registerUserService = async(reqBody: UserType): Promise<UserType> => {
-   
-
+const registerUserService = async(reqBody: userRegister): Promise<userRegister> => {
+    
+    
     return reqBody
 }
  
-export default registerUserService;
+export default registerUserService; 

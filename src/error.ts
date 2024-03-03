@@ -19,7 +19,7 @@ export const handleError = (error: Error, req: Request, res: Response ) => {
             message: error.flatten().fieldErrors
         })
     }
-    return res.json(500).json({
+    return res.status(500).json({
         message: "Internal server error"
     })
 }
