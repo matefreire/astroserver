@@ -6,7 +6,8 @@ import { ensureSchema } from "@/middlewares/ensureSchema.middleware";
 
 
 import { userRegisterSchema } from "@/schemas/user.schemas";
+import { ensureBodyExists } from "@/middlewares/ensureBodyExists.middleware";
 
 export const userRoute: Router = Router()
 
-userRoute.post('/register', ensureSchema(userRegisterSchema), registerUserControllers)
+userRoute.post('/register', ensureBodyExists, ensureSchema(userRegisterSchema), registerUserControllers)
