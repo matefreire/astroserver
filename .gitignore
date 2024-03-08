@@ -3,3 +3,4 @@ node_modules
 .env
 docker-entrypoint-initdb.d
 dist
+docker-compose.yml

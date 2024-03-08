@@ -21,7 +21,6 @@ const loginUserController = async (req: Request, res: Response): Promise<Respons
     return res.status(200).json({ token })
 }
 
-
 const getAllUsersController = async (req: Request, res: Response): Promise<Response<void>> => {
 
     const users: userWithoutPassword[] = await getAllUsersService()
@@ -48,6 +47,7 @@ const putUserController = async (req: Request, res: Response): Promise<Response<
 
     return res.status(200).json(editedUser)
 }
+
 
 
 export { postUserController, loginUserController, getAllUsersController, getUserByIdController, putUserController }
