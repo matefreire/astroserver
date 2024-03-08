@@ -6,45 +6,48 @@ import { getUserByIdService } from "@/services/users/getUserById.services";
 import { userRegister, userWithoutPassword } from "@/types/user.types";
 import { putUserService } from "@/services/users/putUser.services";
 
-const postUserController = async(req: Request, res: Response): Promise<Response<void>> => {
+const postUserController = async (req: Request, res: Response): Promise<Response<void>> => {
 
-    const reqBody = req.body 
-    const createdUser:userRegister = await postUserService(reqBody)
+    const reqBody = req.body
+    const createdUser: userRegister = await postUserService(reqBody)
 
     return res.status(200).json(createdUser)
 }
 
-const loginUserController = async(req: Request, res:Response): Promise<Response<void>> =>{
+const loginUserController = async (req: Request, res: Response): Promise<Response<void>> => {
 
-    const token:string = await loginUserService(req.body)
+    const token: string = await loginUserService(req.body)
 
-    return res.status(200).json({token})
+    return res.status(200).json({ token })
 }
 
 
-const getAllUsersController = async(req: Request, res:Response): Promise<Response<void>> =>{
+const getAllUsersController = async (req: Request, res: Response): Promise<Response<void>> => {
 
-    const users:userWithoutPassword[] = await getAllUsersService()
+    const users: userWithoutPassword[] = await getAllUsersService()
 
     return res.status(200).json(users)
 }
 
-const getUserByIdController = async(req: Request, res:Response): Promise<Response<void>> =>{
+const getUserByIdController = async (req: Request, res: Response): Promise<Response<void>> => {
 
-    const id:string = req.params.id
+    const id: string = req.params.id
 
-    const user:userWithoutPassword = await getUserByIdService(id)
+    const user: userWithoutPassword = await getUserByIdService(id)
 
     return res.status(200).json(user)
 }
 
-const putUserController = async(req: Request, res:Response): Promise<Response<void>> =>{
+const putUserController = async (req: Request, res: Response): Promise<Response<void>> => {
+
     const user = req.body
 
-    const editedUser: userWithoutPassword = await putUserService(user)
+    const id: string = req.params.id
+
+    const editedUser: userWithoutPassword = await putUserService(id, user)
 
     return res.status(200).json(editedUser)
 }
 
 
-export {postUserController, loginUserController, getAllUsersController, getUserByIdController, putUserController}
+export { postUserController, loginUserController, getAllUsersController, getUserByIdController, putUserController }

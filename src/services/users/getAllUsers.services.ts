@@ -13,6 +13,7 @@ const getAllUsersService = async():Promise<userWithoutPassword[]> => {
     }
 
     const usersWithoutPassword = users.map(user => userWithoutPasswordSchema.parse(user))
+
     return usersWithoutPassword
 }
 
