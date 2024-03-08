@@ -1,4 +1,5 @@
 import z from 'zod'
+
 export const userSchema = z.object({
     id: z.string(),
     name: z.string(),
@@ -14,4 +15,10 @@ export const userSchema = z.object({
 })
 
 export const userRegisterSchema = userSchema.omit({ id: true, access_level: true, createdAt: true, deletedAt: true })
+export const userWithoutPasswordSchema = userSchema.omit({password:true})
+
+export const userLoginSchema = z.object({
+    email: z.string(),
+    password: z.string()
+})
 
