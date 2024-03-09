@@ -20,7 +20,6 @@ const loginUserService = async (reqBody: userLogin):Promise<string> => {
     }
 
     const unHashedPassword = await bcrypt.compare(reqBody.password, user.password)
-    console.log(unHashedPassword)
     if (!unHashedPassword) {
         throw new AppError("Wrong e-mail/password", 400)
     }

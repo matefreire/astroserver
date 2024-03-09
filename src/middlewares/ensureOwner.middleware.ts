@@ -4,16 +4,23 @@ import { NextFunction, Request, Response } from "express";
 
 export const ensureOwner = async(req:Request, res:Response, next:NextFunction): Promise<void> => {
     
-    const email = res.locals.email
+    const id = req.params.id
     const isAdmin = res.locals.isAdmin
-    
+    const email = res.locals.email
+
+
+    if(isAdmin == 'ADMIN'){
+        next()
+        return
+    }
+
     const user = await db.user.findUnique({
         where: {
-            email: email
+            id: id
         }
     })
 
-    if(!user && isAdmin === 'USER'){
+    if(user?.email != email){
         throw new AppError("Not allowed", 403)
     }
 

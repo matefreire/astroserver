@@ -12,10 +12,6 @@ const getUserByIdService = async(id: string):Promise<userWithoutPassword> => {
         }
     })
 
-    if(!user){
-        throw new AppError("User not found", 400)
-    }
-
     const userWithoutPassword = userWithoutPasswordSchema.parse(user)
 
     return userWithoutPassword

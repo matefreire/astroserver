@@ -5,6 +5,7 @@ import { getAllUsersService } from "@/services/users/getAllUsers.services";
 import { getUserByIdService } from "@/services/users/getUserById.services";
 import { userRegister, userWithoutPassword } from "@/types/user.types";
 import { putUserService } from "@/services/users/putUser.services";
+import { deleteUserService } from "@/services/users/deleteUser.services";
 
 const postUserController = async (req: Request, res: Response): Promise<Response<void>> => {
 
@@ -48,6 +49,13 @@ const putUserController = async (req: Request, res: Response): Promise<Response<
     return res.status(200).json(editedUser)
 }
 
+const deleteUserController = async (req: Request, res: Response): Promise<Response<void>> => {
 
+    const id: string = req.params.id
 
-export { postUserController, loginUserController, getAllUsersController, getUserByIdController, putUserController }
+    await deleteUserService(id)
+
+    return res.sendStatus(204)
+}
+
+export { postUserController, loginUserController, getAllUsersController, getUserByIdController, putUserController, deleteUserController }
