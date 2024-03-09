@@ -6,8 +6,8 @@
   "scripts": {
     "dev": "ts-node-dev -r tsconfig-paths/register src/server.ts",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "npx tsc",
-    "start": "node src/server.ts"
+    "build": "npx tsc npx prisma migrate deploy",
+    "start": "node dist/server.js"
   },
   "keywords": [],
   "author": "",
