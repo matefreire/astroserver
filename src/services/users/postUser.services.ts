@@ -1,9 +1,10 @@
 import { db } from "@/app";
 import { AppError } from "@/error";
-import { userRegister } from "@/types/user.types";
+import { userRegisterResponseSchema } from "@/schemas/user.schemas";
+import { userRegister, userRegisterResponse } from "@/types/user.types";
 import { hashPassword } from "@/utils/bcrypt";
 
-const postUserService = async (reqBody: userRegister): Promise<userRegister> => {
+const postUserService = async (reqBody: userRegister): Promise<userRegisterResponse> => {
 
     const hashedPassword = await hashPassword(reqBody.password);
 
@@ -23,7 +24,10 @@ const postUserService = async (reqBody: userRegister): Promise<userRegister> => 
             password: hashedPassword
         }
     })
-    return newUser
+
+    const userWithoutPassword = userRegisterResponseSchema.parse(newUser)
+
+    return userWithoutPassword
 }
 
 export default postUserService; 

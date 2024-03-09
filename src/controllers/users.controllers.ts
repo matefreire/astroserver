@@ -3,16 +3,16 @@ import postUserService from "@/services/users/postUser.services";
 import { loginUserService } from "@/services/users/loginUser.services";
 import { getAllUsersService } from "@/services/users/getAllUsers.services";
 import { getUserByIdService } from "@/services/users/getUserById.services";
-import { userRegister, userWithoutPassword } from "@/types/user.types";
+import { userRegister, userRegisterResponse, userWithoutPassword } from "@/types/user.types";
 import { putUserService } from "@/services/users/putUser.services";
 import { deleteUserService } from "@/services/users/deleteUser.services";
 
 const postUserController = async (req: Request, res: Response): Promise<Response<void>> => {
 
     const reqBody = req.body
-    const createdUser: userRegister = await postUserService(reqBody)
+    const createdUser: userRegisterResponse = await postUserService(reqBody)
 
-    return res.status(200).json(createdUser)
+    return res.status(201).json(createdUser)
 }
 
 const loginUserController = async (req: Request, res: Response): Promise<Response<void>> => {

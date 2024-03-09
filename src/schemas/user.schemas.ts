@@ -15,7 +15,15 @@ export const userSchema = z.object({
 })
 
 export const userRegisterSchema = userSchema.omit({ id: true, access_level: true, createdAt: true, deletedAt: true })
-export const userWithoutPasswordSchema = userSchema.omit({password:true})
+export const userWithoutPasswordSchema = userSchema.omit({ password: true })
+
+export const userRegisterResponseSchema = userSchema.omit({
+    id: true,
+    password: true,
+    access_level: true,
+    createdAt: true,
+    deletedAt: true
+})
 
 export const userLoginSchema = z.object({
     email: z.string(),
