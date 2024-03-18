@@ -1,6 +1,6 @@
 import { Router } from "express";
 
-import { deleteUserController, getAllUsersController, getUserByIdController, loginUserController, postUserController, putUserController } from "@/controllers/users.controllers";
+import { deleteUserController, getAllUsersController, getUserByIdController, getUserByTokenController, loginUserController, postUserController, putUserController } from "@/controllers/users.controllers";
 
 import { ensureSchema } from "@/middlewares/ensureSchema.middleware";
 
@@ -16,6 +16,7 @@ export const userRoute: Router = Router()
 
 userRoute.get('', getAllUsersController)
 userRoute.get('/:id', ensureUserIdExists, getUserByIdController)
+userRoute.get('/token', ensureUserToken, getUserByTokenController)
 
 userRoute.post('', ensureBodyExists, ensureSchema(userRegisterSchema), postUserController)
 
