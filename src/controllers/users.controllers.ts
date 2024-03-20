@@ -41,7 +41,7 @@ const getUserByIdController = async (req: Request, res: Response): Promise<Respo
 
 const getUserByTokenController = async (req: Request, res: Response): Promise<Response<void>> => {
 
-    const email: string = res.locals.isEmail
+    const email: string = res.locals.email
 
     const user: userWithoutPassword = await getUserByTokenService(email)
 
