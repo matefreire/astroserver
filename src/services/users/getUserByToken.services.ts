@@ -5,6 +5,8 @@ import { User } from "@prisma/client"
 
 export const getUserByTokenService = async(email:string): Promise<userWithoutPassword> =>{
 
+    console.log(email)
+    
     const user: User | null = await db.user.findUnique({
         where: {
             email: email

@@ -15,7 +15,7 @@ import { ensureUserIdExists } from "@/middlewares/ensureUserIdExists.middleware"
 export const userRoute: Router = Router()
 
 userRoute.get('', getAllUsersController)
-userRoute.get('/:id', ensureUserIdExists, getUserByIdController)
+userRoute.get('/user/:id', ensureUserIdExists, getUserByIdController)
 userRoute.get('/token', ensureUserToken, getUserByTokenController)
 
 userRoute.post('', ensureBodyExists, ensureSchema(userRegisterSchema), postUserController)
