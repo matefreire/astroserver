@@ -16,8 +16,8 @@ export const ensureUserToken = (req: Request, res: Response, next: NextFunction)
         if(err)throw new AppError(err.message)
         
         res.locals.isAdmin = decoded.isAdmin
-        res.locals.email = decoded.email
-
+        res.locals.email = decoded.sub
+        
         next()
     })
 }
