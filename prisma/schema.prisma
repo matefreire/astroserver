@@ -16,28 +16,25 @@ enum Access_level {
   USER //User
 }
 
+
 model User {
-  id               String             @id @default(uuid())
-  name             String
-  email            String             @unique @db.Text
-  password         String
-  picture          String?            @db.Text
-  access_level     Access_level       @default(USER)
-  posts            Post[]
-  astronomers      User_astronomers[]
-  comments         Comment[]
-  createdAt        DateTime           @default(now())
-  deletedAt        DateTime?
+  id           String             @id @default(uuid())
+  name         String
+  email        String             @unique @db.Text
+  password     String
+  picture      String?            @db.Text
+  access_level Access_level       @default(USER)
+  posts        Post[]
+  astronomers  User_astronomers[]
+  comments     Comment[]
+  createdAt    DateTime           @default(now())
+  deletedAt    DateTime?
 }
 
-enum Is_accepted {
-  YES
-  NO
-}
-
-enum Post_type {
+enum Type_post {
   NOTICIA
   POST
+  CURIOSITY
   EVENTO
   FOTOGRAFIA
   DICAS
@@ -49,19 +46,21 @@ model Post {
   id          String      @id @default(uuid())
   title       String
   description String
-  is_accepted Is_accepted @default(NO)
+  is_accepted Boolean @default(false)
   picture     String?     @db.Text
-  type        Post_type   @default(POST)
+  post_type   Type_post   @default(POST)
   user        User        @relation(fields: [userId], references: [id])
   userId      String
   comments    Comment[]
 }
 
 model Astronomer {
-  id        String             @id @default(uuid())
-  name      String             @unique
-  picture   String             @db.Text
-  fallowers User_astronomers[]
+  id          String             @id @default(uuid())
+  name        String             @unique
+  picture     String             @db.Text
+  description String             @db.Text
+  birthday    DateTime
+  fallowers   User_astronomers[]
 }
 
 model User_astronomers {
@@ -69,17 +68,17 @@ model User_astronomers {
   astronomerId String
   user         User       @relation(fields: [userId], references: [id])
   astronomer   Astronomer @relation(fields: [astronomerId], references: [id])
-
   @@id([userId, astronomerId])
 }
 
 model Comment {
-  id          String @id @default(uuid())
+  id          String   @id @default(uuid())
   description String
   userId      String
   postId      String
-  user        User   @relation(fields: [userId], references: [id])
-  post        Post   @relation(fields: [postId], references: [id])
+  user        User     @relation(fields: [userId], references: [id])
+  post        Post     @relation(fields: [postId], references: [id])
+  createdAt   DateTime
 }
 
 model Picture {
@@ -88,20 +87,4 @@ model Picture {
   picture String @db.Text
 }
 
-enum Curiosity_type {
-  SISTEMA_SOLAR
-  ESTRELAS_GALAXIAS
-  HISTORIA_ASTRONOMIA
-  EXPLORACAO_ESPACIAL
-  FENOMENOS_CELESTES
-  ASTRONOMIA_CULTURAL
-  VIDA_EXTRATERRESTRE
-}
 
-model Curiosity {
-  id          String         @id @default(uuid())
-  title       String
-  description String
-  picture     String?
-  type        Curiosity_type
-}

@@ -18,7 +18,7 @@ userRoute.get('', getAllUsersController)
 userRoute.get('/user/:id', ensureUserIdExists, getUserByIdController)
 userRoute.get('/token', ensureUserToken, getUserByTokenController)
 
-userRoute.post('', ensureBodyExists, ensureSchema(userRegisterSchema), postUserController)
+userRoute.post('',  ensureSchema(userRegisterSchema), postUserController)
 
 userRoute.post('/login', ensureBodyExists, ensureSchema(userLoginSchema), loginUserController)
 userRoute.post('/login/admin', ensureBodyExists, ensureSchema(userLoginSchema), ensureIsAdm, loginUserController)
