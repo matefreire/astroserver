@@ -1,4 +1,4 @@
-import { type_post } from "@/utils/enums";
+import { Type_post } from "@prisma/client";
 import { z } from "zod";
 
 export const postSchema = z.object({
@@ -7,7 +7,7 @@ export const postSchema = z.object({
     description: z.string(),
     is_accepted: z.boolean(),
     picture: z.string().nullish(),
-    post_type: z.nativeEnum(type_post).nullish(),
+    post_type: z.nativeEnum(Type_post),
     userId:z.string(),
     createdAt: z.date(),
     deletedAt: z.date().nullish()
