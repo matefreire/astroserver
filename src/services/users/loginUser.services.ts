@@ -13,7 +13,8 @@ const loginUserService = async (reqBody: userLogin):Promise<string> => {
         where: {
             email: reqBody.email
         }
-    })
+    })  
+
 
     if (!user) {
         throw new AppError("Wrong e-mail/password", 400)
@@ -23,14 +24,13 @@ const loginUserService = async (reqBody: userLogin):Promise<string> => {
     if (!unHashedPassword) {
         throw new AppError("Wrong e-mail/password", 400)
     }
-
     const token = jwt.sign({
         isAdmin: user.access_level
     }, process.env.SECRET_KEY!, {
         expiresIn: '1d',
         subject: String(user.email)
-    })
-
+    })  
+   
     return token
 }
 
