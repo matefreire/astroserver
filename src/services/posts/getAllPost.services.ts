@@ -3,7 +3,7 @@ import { AppError } from "@/error";
 import { postRegisterType, postType } from "@/types/post.types";
 import { Type_post_enum, User } from "@prisma/client";
 
-export const postPostService = async (
+export const getAllPostService = async (
   post: postRegisterType
 ): Promise<postType> => {
   const user: User | null = await db.user.findUnique({

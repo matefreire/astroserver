@@ -3,69 +3,114 @@ import postUserService from "@/services/users/postUser.services";
 import { loginUserService } from "@/services/users/loginUser.services";
 import { getAllUsersService } from "@/services/users/getAllUsers.services";
 import { getUserByIdService } from "@/services/users/getUserById.services";
-import { userRegister, userRegisterResponse, userWithoutPassword } from "@/types/user.types";
+import { userRegisterResponse, userWithoutPassword } from "@/types/user.types";
 import { putUserService } from "@/services/users/putUser.services";
 import { deleteUserService } from "@/services/users/deleteUser.services";
 import { getUserByTokenService } from "@/services/users/getUserByToken.services";
 
-const postUserController = async (req: Request, res: Response): Promise<Response<void>> => {
+const postUserController = async (
+  req: Request,
+  res: Response
+): Promise<Response<void>> => {
+  try {
+    const reqBody = req.body;
+    const createdUser: userRegisterResponse = await postUserService(reqBody);
+    return res.status(201).json(createdUser);
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({ message: "Erro interno" });
+  }
+};
 
-    const reqBody = req.body
-    const createdUser: userRegisterResponse = await postUserService(reqBody)
+const loginUserController = async (
+  req: Request,
+  res: Response
+): Promise<Response<void>> => {
+  try {
+    const token: string = await loginUserService(req.body);
+    return res.status(200).json({ token });
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({ message: "Erro interno" });
+  }
+};
 
-    return res.status(201).json(createdUser)
-}
+const getAllUsersController = async (
+  req: Request,
+  res: Response
+): Promise<Response<void>> => {
+  try {
+    const users: userWithoutPassword[] = await getAllUsersService();
+    return res.status(200).json(users);
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({ message: "Erro interno" });
+  }
+};
 
-const loginUserController = async (req: Request, res: Response): Promise<Response<void>> => {
+const getUserByIdController = async (
+  req: Request,
+  res: Response
+): Promise<Response<void>> => {
+  try {
+    const id: string = req.params.id;
+    const user: userWithoutPassword = await getUserByIdService(id);
+    return res.status(200).json(user);
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({ message: "Erro interno" });
+  }
+};
 
-    const token: string = await loginUserService(req.body)
+const getUserByTokenController = async (
+  req: Request,
+  res: Response
+): Promise<Response<void>> => {
+  try {
+    const email: string = res.locals.email;
+    const user: userWithoutPassword = await getUserByTokenService(email);
+    return res.status(200).json(user);
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({ message: "Erro interno" });
+  }
+};
 
-    return res.status(200).json({ token })
-}
+const putUserController = async (
+  req: Request,
+  res: Response
+): Promise<Response<void>> => {
+  try {
+    const user = req.body;
+    const id: string = req.params.id;
+    const editedUser: userWithoutPassword = await putUserService(id, user);
+    return res.status(200).json(editedUser);
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({ message: "Erro interno" });
+  }
+};
 
-const getAllUsersController = async (req: Request, res: Response): Promise<Response<void>> => {
+const deleteUserController = async (
+  req: Request,
+  res: Response
+): Promise<Response<void>> => {
+  try {
+    const id: string = req.params.id;
+    await deleteUserService(id);
+    return res.sendStatus(204);
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({ message: "Erro interno" });
+  }
+};
 
-    const users: userWithoutPassword[] = await getAllUsersService()
-
-    return res.status(200).json(users)
-}
-
-const getUserByIdController = async (req: Request, res: Response): Promise<Response<void>> => {
-
-    const id: string = req.params.id
-
-    const user: userWithoutPassword = await getUserByIdService(id)
-
-    return res.status(200).json(user)
-}
-
-const getUserByTokenController = async (req: Request, res: Response): Promise<Response<void>> => {
-
-    const email: string = res.locals.email
-
-    const user: userWithoutPassword = await getUserByTokenService(email)
-
-    return res.status(200).json(user)
-}
-
-const putUserController = async (req: Request, res: Response): Promise<Response<void>> => {
-
-    const user = req.body
-
-    const id: string = req.params.id
-
-    const editedUser: userWithoutPassword = await putUserService(id, user)
-
-    return res.status(200).json(editedUser)
-}
-
-const deleteUserController = async (req: Request, res: Response): Promise<Response<void>> => {
-
-    const id: string = req.params.id
-
-    await deleteUserService(id)
-
-    return res.sendStatus(204)
-}
-
-export { postUserController, loginUserController, getAllUsersController, getUserByIdController, putUserController, deleteUserController, getUserByTokenController }
+export {
+  postUserController,
+  loginUserController,
+  getAllUsersController,
+  getUserByIdController,
+  putUserController,
+  deleteUserController,
+  getUserByTokenController,
+};
