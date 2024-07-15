@@ -1,3 +1,5 @@
+import { getAllPostService } from "@/services/posts/getAllPost.services";
+import { getPostByIdService } from "@/services/posts/getPostById.services";
 import { postPostService } from "@/services/posts/postPost.services";
 import { postType } from "@/types/post.types";
 import { Request, Response } from "express";
@@ -7,8 +9,8 @@ const getPostByIdController = async (
   res: Response
 ): Promise<Response> => {
   try {
-    const id: number = req.body;
-    const post: postType = await postPostService(id);
+    const id: string = req.body;
+    const post: postType = await getPostByIdService(id);
     return res.status(200).json(post);
   } catch (err: any) {
     console.error(err);
@@ -21,7 +23,7 @@ const getAllPostController = async (
   res: Response
 ): Promise<Response> => {
   try {
-    const posts: postType[] = await postPostService();
+    const posts: postType[] | null = await getAllPostService();
     return res.status(200).json(posts);
   } catch (err: any) {
     console.error(err);
@@ -42,4 +44,4 @@ const postPostController = async (
   }
 };
 
-export { postPostController, getPostByIdController };
+export { postPostController, getPostByIdController, getAllPostController };

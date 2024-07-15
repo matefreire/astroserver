@@ -7,7 +7,7 @@ export const postSchema = z.object({
   description: z.string(),
   is_accepted: z.boolean(),
   picture: z.string().nullish(),
-  post_type: z.nativeEnum(Type_post_enum),
+  post_type: z.nativeEnum(Type_post_enum).nullish(),
   userId: z.string(),
   createdAt: z.date(),
   deletedAt: z.date().nullish(),

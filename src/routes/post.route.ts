@@ -1,4 +1,5 @@
 import {
+  getAllPostController,
   getPostByIdController,
   postPostController,
 } from "@/controllers/post.controllers";
