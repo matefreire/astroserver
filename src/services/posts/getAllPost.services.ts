@@ -2,6 +2,23 @@ import { db } from "@/app";
 import { Post } from "@prisma/client";
 
 export const getAllPostService = async (): Promise<Post[]> => {
-  const posts: Post[] | null = await db.post.findMany({});
+  const posts: Post[] = await db.post.findMany({
+    select: {
+      id: true,
+      title: true,
+      description: true,
+      is_accepted: true,
+      picture: true,
+      post_type: true,
+      userId: true,
+      createdAt: true,
+      user: {
+        select: {
+          id: true,
+          name: true,
+        },
+      }, // Inclua user se você precisar dessas informações também
+    },
+  });
   return posts;
 };
