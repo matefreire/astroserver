@@ -1,3 +1,4 @@
+import { deletePostService } from "@/services/posts/deletePostService.services";
 import { getAllPostService } from "@/services/posts/getAllPost.services";
 import { getPostByIdService } from "@/services/posts/getPostById.services";
 import { postPostService } from "@/services/posts/postPost.services";
@@ -43,5 +44,22 @@ const postPostController = async (
     return res.status(500).json({ message: "Erro interno" });
   }
 };
+const deletePostController = async (
+  req: Request,
+  res: Response
+): Promise<Response> => {
+  try {
+    await deletePostService(req.params.id);
+    return res.status(204).send();
+  } catch (err: any) {
+    console.error(err);
+    return res.status(500).json({ message: "Erro interno" });
+  }
+};
 
-export { postPostController, getPostByIdController, getAllPostController };
+export {
+  postPostController,
+  getPostByIdController,
+  getAllPostController,
+  deletePostController,
+};

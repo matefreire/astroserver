@@ -1,4 +1,5 @@
 import {
+  deletePostController,
   getAllPostController,
   getPostByIdController,
   postPostController,
@@ -17,3 +18,4 @@ postRoute.get("/", ensureUserToken, getAllPostController);
 postRoute.post("/", ensureSchema(postRegisterSchema), postPostController);
 
 postRoute.put("/");
+postRoute.delete("/:id", ensureUserToken, deletePostController);
