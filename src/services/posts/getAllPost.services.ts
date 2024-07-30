@@ -19,6 +19,9 @@ export const getAllPostService = async (): Promise<Post[]> => {
         },
       }, // Inclua user se você precisar dessas informações também
     },
+    orderBy: {
+      createdAt: "desc",
+    },
   });
   return posts;
 };

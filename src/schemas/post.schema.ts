@@ -19,3 +19,11 @@ export const postRegisterSchema = postSchema.omit({
   createdAt: true,
   deletedAt: true,
 });
+export const putPostSchema = postSchema
+  .omit({
+    id: true,
+    is_accepted: true,
+    createdAt: true,
+    deletedAt: true,
+  })
+  .partial();
