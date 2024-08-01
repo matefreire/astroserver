@@ -15,7 +15,6 @@ export const putPostService = async (
       description: reqBody.description,
     },
   });
-  console.log(post);
   if (!post) {
     throw new AppError("Post notfound", 404);
   }

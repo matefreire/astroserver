@@ -1,25 +1,25 @@
-import "express-async-errors"
-import express from "express"
+import "express-async-errors";
+import express from "express";
 
-import cors from 'cors'
+import cors from "cors";
 
-import { PrismaClient } from "@prisma/client"
-import { userRoute } from "./routes/user.route"
+import { PrismaClient } from "@prisma/client";
+import { userRoute } from "./routes/user.route";
 
-import { handleError } from "./error"
-import { postRoute } from "./routes/post.route"
+import { handleError } from "./error";
+import { postRoute } from "./routes/post.route";
 
-export const db = new PrismaClient()
+export const db = new PrismaClient();
 
-const app = express()
+const app = express();
 
-app.use(cors())
+app.use(cors());
 
-app.use(express.json())
+app.use(express.json());
 
-app.use('/users', userRoute)
-app.use('/posts', postRoute)
+app.use("/users", userRoute);
+app.use("/posts", postRoute);
 
-app.use(handleError)
+app.use(handleError);
 
-export default app
+export default app;
