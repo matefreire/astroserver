@@ -3,6 +3,7 @@ import {
   getAllPostController,
   getPostByIdController,
   postPostController,
+  postSearchPostController,
   putPostController,
 } from "@/controllers/post.controllers";
 import { ensureBodyExists } from "@/middlewares/ensureBodyExists.middleware";
@@ -16,6 +17,7 @@ export const postRoute: Router = Router();
 postRoute.get("/:id", ensureUserToken, getPostByIdController);
 
 postRoute.get("/", ensureUserToken, getAllPostController);
+postRoute.post("/searchPosts", ensureUserToken, postSearchPostController);
 
 postRoute.post(
   "/",
