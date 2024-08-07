@@ -18,5 +18,8 @@ export const postSearchPostService = async (posts: string) => {
         },
       ],
     },
+    include: {
+      user: true,
+    },
   });
 };
