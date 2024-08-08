@@ -1,5 +1,5 @@
 import { db } from "@/app";
-import { User } from "@prisma/client";
+import { Access_level, User } from "@prisma/client";
 
 import { AppError } from "@/error";
 
@@ -7,23 +7,17 @@ import { userLogin } from "@/types/user.types";
 
 import { NextFunction, Request, Response } from "express";
 
-export const ensureIsAdm = async(req:Request, res:Response, next:NextFunction) => {
+export const ensureIsAdm = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  console.log(res.locals.isAdmin);
+  const userBody = res.locals.isAdmin;
 
-    const userBody:userLogin = req.body
+  if (res.locals.isAdmin !== Access_level.ADMIN) {
+    throw new AppError("Access denied", 403);
+  }
 
-    const user: User| null = await db.user.findUnique({
-        where: {
-            email: userBody.email
-        }
-    })
-
-    if(!user){
-        throw new AppError('Wrong e-mail/password', 400)
-    }
-
-    if(user.access_level !== 'ADMIN'){
-        throw new AppError("Access denied", 403)
-    }
-
-    next()
-}
+  next();
+};

@@ -3,6 +3,9 @@ import { Post } from "@prisma/client";
 
 export const getAllPostService = async (): Promise<Post[]> => {
   const posts: Post[] = await db.post.findMany({
+    where: {
+      is_accepted: true,
+    },
     select: {
       id: true,
       title: true,

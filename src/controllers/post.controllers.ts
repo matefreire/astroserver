@@ -2,7 +2,6 @@ import { deletePostService } from "@/services/posts/deletePostService.services";
 import { getAllPostService } from "@/services/posts/getAllPost.services";
 import { getPostByIdService } from "@/services/posts/getPostById.services";
 import { postPostService } from "@/services/posts/postPost.services";
-import { postSearchPostService } from "@/services/posts/postSearchPostService.services";
 import { putPostService } from "@/services/posts/putPostService.services";
 import { postType } from "@/types/post.types";
 import { Request, Response } from "express";
@@ -47,19 +46,6 @@ const postPostController = async (
   }
 };
 
-const postSearchPostController = async (
-  req: Request,
-  res: Response
-): Promise<Response> => {
-  try {
-    const createdPost: postType[] = await postSearchPostService(req.body.posts);
-    console.log(createdPost);
-    return res.status(200).json(createdPost);
-  } catch (err: any) {
-    console.error(err);
-    return res.status(500).json({ message: "Erro interno" });
-  }
-};
 const putPostController = async (
   req: Request,
   res: Response
@@ -93,5 +79,4 @@ export {
   getAllPostController,
   deletePostController,
   putPostController,
-  postSearchPostController,
 };
