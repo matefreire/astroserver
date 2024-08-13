@@ -32,4 +32,12 @@ postRoute.put(
   ensureSchema(putPostSchema),
   putPostController
 );
+
+postRoute.put(
+  "accept/:id",
+  ensureUserToken,
+  ensureBodyExists,
+  ensureSchema(putPostSchema),
+  putPostController
+);
 postRoute.delete("/:id", ensureUserToken, deletePostController);
