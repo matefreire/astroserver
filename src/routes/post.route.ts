@@ -8,7 +8,11 @@ import {
 import { ensureBodyExists } from "@/middlewares/ensureBodyExists.middleware";
 import { ensureSchema } from "@/middlewares/ensureSchema.middleware";
 import { ensureUserToken } from "@/middlewares/ensureUserToken.middleware";
-import { postRegisterSchema, putPostSchema } from "@/schemas/post.schema";
+import {
+  postRegisterSchema,
+  putAcceptPostSchema,
+  putPostSchema,
+} from "@/schemas/post.schema";
 import { Router } from "express";
 
 export const postRoute: Router = Router();
@@ -34,10 +38,10 @@ postRoute.put(
 );
 
 postRoute.put(
-  "accept/:id",
+  "/accept/:id",
   ensureUserToken,
   ensureBodyExists,
-  ensureSchema(putPostSchema),
+  ensureSchema(putAcceptPostSchema),
   putPostController
 );
 postRoute.delete("/:id", ensureUserToken, deletePostController);

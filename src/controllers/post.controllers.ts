@@ -2,6 +2,7 @@ import { deletePostService } from "@/services/posts/deletePostService.services";
 import { getAllPostService } from "@/services/posts/getAllPost.services";
 import { getPostByIdService } from "@/services/posts/getPostById.services";
 import { postPostService } from "@/services/posts/postPost.services";
+import { putAcceptPostService } from "@/services/posts/putAcceptPost.services";
 import { putPostService } from "@/services/posts/putPostService.services";
 import { postType } from "@/types/post.types";
 import { Request, Response } from "express";
@@ -59,6 +60,19 @@ const putPostController = async (
     return res.status(500).json({ message: "Erro interno" });
   }
 };
+const putAcceptPostController = async (
+  req: Request,
+  res: Response
+): Promise<Response> => {
+  try {
+    const id = req.params.id;
+    await putAcceptPostService(id);
+    return res.status(201).json({ message: "Post aceito com sucesso!" });
+  } catch (err: any) {
+    console.error(err);
+    return res.status(500).json({ message: "Erro interno" });
+  }
+};
 
 const deletePostController = async (
   req: Request,
@@ -79,4 +93,5 @@ export {
   getAllPostController,
   deletePostController,
   putPostController,
+  putAcceptPostController,
 };

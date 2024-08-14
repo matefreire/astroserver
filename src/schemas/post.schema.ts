@@ -27,3 +27,14 @@ export const putPostSchema = postSchema
     deletedAt: true,
   })
   .partial();
+
+export const putAcceptPostSchema = postSchema.omit({
+  id: true,
+  title: true,
+  description: true,
+  picture: true,
+  post_type: true,
+  userId: true,
+  createdAt: true,
+  deletedAt: true,
+});
