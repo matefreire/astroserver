@@ -3,9 +3,11 @@ import {
   getAllPostController,
   getPostByIdController,
   postPostController,
+  putAcceptPostController,
   putPostController,
 } from "@/controllers/post.controllers";
 import { ensureBodyExists } from "@/middlewares/ensureBodyExists.middleware";
+import { ensureIsAdm } from "@/middlewares/ensureIsAdm.middleware";
 import { ensureSchema } from "@/middlewares/ensureSchema.middleware";
 import { ensureUserToken } from "@/middlewares/ensureUserToken.middleware";
 import {
@@ -40,8 +42,7 @@ postRoute.put(
 postRoute.put(
   "/accept/:id",
   ensureUserToken,
-  ensureBodyExists,
-  ensureSchema(putAcceptPostSchema),
-  putPostController
+  ensureIsAdm,
+  putAcceptPostController
 );
 postRoute.delete("/:id", ensureUserToken, deletePostController);

@@ -12,9 +12,6 @@ export const ensureIsAdm = async (
   res: Response,
   next: NextFunction
 ) => {
-  console.log(res.locals.isAdmin);
-  const userBody = res.locals.isAdmin;
-
   if (res.locals.isAdmin !== Access_level.ADMIN) {
     throw new AppError("Access denied", 403);
   }

@@ -8,7 +8,7 @@ export const ensureUserToken = (
   next: NextFunction
 ) => {
   const token: string | undefined = req.headers.authorization;
-  console.log("token", token);
+
   if (!token) {
     throw new AppError("Token is missing", 401);
   }
