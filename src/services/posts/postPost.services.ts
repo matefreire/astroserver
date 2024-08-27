@@ -34,3 +34,43 @@ export const postPostService = async (
 
   return newPost;
 };
+
+// export const postPostService = async (
+//   post: postRegisterType
+// ): Promise<postType> => {
+//   let isPostAccepted = false;
+
+//   const user: User | null = await db.$queryRaw<User>`
+//     SELECT * FROM "User" WHERE "id" = ${post.userId} LIMIT 1;
+//   `;
+
+//   if (!user) {
+//     throw new AppError("User not found", 404);
+//   }
+
+//   if (user.access_level === Access_level.ADMIN) {
+//     isPostAccepted = true;
+//   }
+
+//   const newPost = await db.$queryRaw<postType[]>`
+//     INSERT INTO "Post" (
+//       "title",
+//       "description",
+//       "userId",
+//       "post_type",
+//       "picture",
+//       "is_accepted"
+//     ) VALUES (
+//       ${post.title},
+//       ${post.description},
+//       ${post.userId},
+//       ${
+//         post.post_type ?? Type_post_enum.POST
+//       }::"Type_post_enum", -- Conversão do tipo enum
+//       ${post.picture},
+//       ${isPostAccepted}
+//     ) RETURNING *;
+//   `;
+
+//   return newPost[0];
+// };

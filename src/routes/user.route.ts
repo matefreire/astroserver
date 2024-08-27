@@ -6,13 +6,18 @@ import {
   getUserByIdController,
   getUserByTokenController,
   loginUserController,
+  passwordUserController,
   postUserController,
   putUserController,
 } from "@/controllers/users.controllers";
 
 import { ensureSchema } from "@/middlewares/ensureSchema.middleware";
 
-import { userLoginSchema, userRegisterSchema } from "@/schemas/user.schemas";
+import {
+  userLoginSchema,
+  userPasswordSchema,
+  userRegisterSchema,
+} from "@/schemas/user.schemas";
 import { ensureBodyExists } from "@/middlewares/ensureBodyExists.middleware";
 import { ensureIsAdm } from "@/middlewares/ensureIsAdm.middleware";
 import { ensureUserToken } from "@/middlewares/ensureUserToken.middleware";
@@ -49,4 +54,10 @@ userRoute.delete(
   ensureOwner,
   ensureUserIdExists,
   deleteUserController
+);
+
+userRoute.post(
+  "/password",
+  ensureSchema(userPasswordSchema),
+  passwordUserController
 );

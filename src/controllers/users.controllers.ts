@@ -3,10 +3,15 @@ import postUserService from "@/services/users/postUser.services";
 import { loginUserService } from "@/services/users/loginUser.services";
 import { getAllUsersService } from "@/services/users/getAllUsers.services";
 import { getUserByIdService } from "@/services/users/getUserById.services";
-import { userRegisterResponse, userWithoutPassword } from "@/types/user.types";
+import {
+  userPassword,
+  userRegisterResponse,
+  userWithoutPassword,
+} from "@/types/user.types";
 import { putUserService } from "@/services/users/putUser.services";
 import { deleteUserService } from "@/services/users/deleteUser.services";
 import { getUserByTokenService } from "@/services/users/getUserByToken.services";
+import { passwordUserService } from "@/services/users/passwordUser.services";
 
 const postUserController = async (
   req: Request,
@@ -105,6 +110,19 @@ const deleteUserController = async (
   }
 };
 
+const passwordUserController = async (
+  req: Request,
+  res: Response
+): Promise<Response<void>> => {
+  try {
+    const data: userPassword = req.body;
+    await passwordUserService(data);
+    return res.status(200).json({ message: "Senha alterada com sucesso" });
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({ message: "Erro interno" });
+  }
+};
 export {
   postUserController,
   loginUserController,
@@ -113,4 +131,5 @@ export {
   putUserController,
   deleteUserController,
   getUserByTokenController,
+  passwordUserController,
 };
