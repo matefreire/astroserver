@@ -38,5 +38,5 @@ export const putPostService = async (
     throw new AppError("Post not found", 404);
   }
 
-  return post[0]; // Retornando o primeiro item do array
+  return post[0];
 };

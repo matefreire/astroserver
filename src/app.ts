@@ -9,6 +9,8 @@ import { userRoute } from "./routes/user.route";
 import { handleError } from "./error";
 import { postRoute } from "./routes/post.route";
 import { adminRoute } from "./routes/admin.route";
+import { commentRoute } from "./routes/comment.route";
+import { historyRoute } from "./routes/history.route";
 
 export const db = new PrismaClient();
 
@@ -21,6 +23,8 @@ app.use(express.json());
 app.use("/users", userRoute);
 app.use("/posts", postRoute);
 app.use("/admin", adminRoute);
+app.use("/comment", commentRoute);
+app.use("/history", historyRoute);
 
 app.use(handleError);
 

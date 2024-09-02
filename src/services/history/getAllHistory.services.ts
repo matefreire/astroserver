@@ -1,26 +1,14 @@
 import { db } from "@/app";
-import { Post } from "@prisma/client";
 
-// export const getAllPostService = async (): Promise<Post[]> => {
-//   const posts: Post[] = await db.post.findMany({
-//     where: {
-//       is_accepted: true,
-//     },
+// export const getAllHistoryService = async (): Promise<any> => {
+//   const posts = await db.postHistory.findMany({
 //     select: {
 //       id: true,
 //       title: true,
 //       description: true,
-//       is_accepted: true,
 //       picture: true,
-//       post_type: true,
 //       userId: true,
 //       createdAt: true,
-//       user: {
-//         select: {
-//           id: true,
-//           name: true,
-//         },
-//       },
 //       comments: {
 //         select: {
 //           id: true,
@@ -37,21 +25,15 @@ import { Post } from "@prisma/client";
 //   return posts;
 // };
 
-export const getAllPostService = async (): Promise<Post[]> => {
-  const posts: Post[] = await db.$queryRaw<Post[]>`
+export const getAllHistoryService = async (): Promise<any> => {
+  const posts = await db.$queryRaw`
     SELECT 
-      p.id,
-      p.title,
-      p.description,
-      p.is_accepted,
-      p.picture,
-      p.post_type,
-      p."userId",
-      p."createdAt",
-      json_build_object(
-        'id', u.id,
-        'name', u.name
-      ) as user,
+      ph.id,
+      ph.title,
+      ph.description,
+      ph.picture,
+      ph."userId",
+      ph."createdAt",
       (
         SELECT json_agg(
           json_build_object(
@@ -66,12 +48,12 @@ export const getAllPostService = async (): Promise<Post[]> => {
         )
         FROM "Comment" c
         JOIN "User" uc ON uc.id = c."userId"
-        WHERE c."postId" = p.id
+        WHERE c."postId" = ph.id
       ) as comments
-    FROM "Post" p
-    JOIN "User" u ON u.id = p."userId"
-    WHERE p.is_accepted = true
-    ORDER BY p."createdAt" DESC;
+    FROM 
+      "PostHistory" ph
+    ORDER BY 
+      ph."createdAt" DESC;
   `;
 
   return posts;

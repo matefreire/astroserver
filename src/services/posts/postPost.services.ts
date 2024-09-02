@@ -40,7 +40,6 @@ export const postPostService = async (
 ): Promise<postType> => {
   let isPostAccepted = false;
 
-  // Verifique se o usuário existe
   const user = await db.$queryRaw<User[]>`
     SELECT * FROM "User" WHERE "id" = ${post.userId} LIMIT 1;
   `;
@@ -49,12 +48,10 @@ export const postPostService = async (
     throw new AppError("User not found", 404);
   }
 
-  // Verifique o nível de acesso do usuário
   if (user[0].access_level === Access_level.ADMIN) {
     isPostAccepted = true;
   }
-  console.log(post, "post");
-  // Insira o novo post na base de dados
+
   const newPost = await db.$queryRaw<postType[]>`
     INSERT INTO "Post" (
       "id", 

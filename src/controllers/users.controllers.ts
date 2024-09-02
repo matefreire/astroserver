@@ -12,6 +12,7 @@ import { putUserService } from "@/services/users/putUser.services";
 import { deleteUserService } from "@/services/users/deleteUser.services";
 import { getUserByTokenService } from "@/services/users/getUserByToken.services";
 import { passwordUserService } from "@/services/users/passwordUser.services";
+import { AppError } from "@/error";
 
 const postUserController = async (
   req: Request,
@@ -22,7 +23,10 @@ const postUserController = async (
     const createdUser: userRegisterResponse = await postUserService(reqBody);
     return res.status(201).json(createdUser);
   } catch (error) {
-    console.error(error);
+    console.log(error);
+    if (error instanceof AppError) {
+      return res.status(error.statusCode).json({ message: error.message });
+    }
     return res.status(500).json({ message: "Erro interno" });
   }
 };
