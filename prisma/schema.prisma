@@ -28,6 +28,7 @@ model User {
   id           String             @id @default(uuid())
   name         String
   email        String             @unique @db.Text
+  description  String?            @db.Text
   password     String
   picture      String?            @db.Text
   access_level Access_level       @default(USER)

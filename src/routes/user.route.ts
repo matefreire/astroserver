@@ -13,16 +13,15 @@ import {
 
 import { ensureSchema } from "@/middlewares/ensureSchema.middleware";
 
+import { ensureBodyExists } from "@/middlewares/ensureBodyExists.middleware";
+import { ensureOwner } from "@/middlewares/ensureOwner.middleware";
+import { ensureUserIdExists } from "@/middlewares/ensureUserIdExists.middleware";
+import { ensureUserToken } from "@/middlewares/ensureUserToken.middleware";
 import {
   userLoginSchema,
   userPasswordSchema,
   userRegisterSchema,
 } from "@/schemas/user.schemas";
-import { ensureBodyExists } from "@/middlewares/ensureBodyExists.middleware";
-import { ensureIsAdm } from "@/middlewares/ensureIsAdm.middleware";
-import { ensureUserToken } from "@/middlewares/ensureUserToken.middleware";
-import { ensureOwner } from "@/middlewares/ensureOwner.middleware";
-import { ensureUserIdExists } from "@/middlewares/ensureUserIdExists.middleware";
 
 export const userRoute: Router = Router();
 
