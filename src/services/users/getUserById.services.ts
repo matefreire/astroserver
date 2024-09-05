@@ -20,17 +20,19 @@ import { User } from "@prisma/client";
 // export {getUserByIdService}
 
 const getUserByIdService = async (id: string): Promise<userWithoutPassword> => {
-  const user = await db.$queryRaw<User | null>`
-      SELECT * FROM "User" WHERE "id" = ${id};
-    `;
+  const users = await db.$queryRaw<User[]>`
+    SELECT * FROM "User" WHERE "id" = ${id} LIMIT 1;
+  `;
 
-  if (!user) {
+  if (users.length === 0) {
     throw new AppError("User not found", 404);
   }
 
+  const user = users[0]; // Extraindo o primeiro (e único) usuário do array
+
+  // Validação e parsing usando o schema `userWithoutPasswordSchema`
   const userWithoutPassword = userWithoutPasswordSchema.parse(user);
 
   return userWithoutPassword;
 };
-
 export { getUserByIdService };

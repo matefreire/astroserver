@@ -67,7 +67,7 @@ model PostHistory {
 model Astronomer {
   id          String             @id @default(uuid())
   name        String             @unique
-  picture     String             @db.Text
+  picture     String?            @db.Text
   description String             @db.Text
   birthday    DateTime
   fallowers   User_astronomers[]

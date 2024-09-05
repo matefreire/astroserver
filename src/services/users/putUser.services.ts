@@ -25,7 +25,8 @@ export const putUserService = async (
   const userUp = await db.$queryRaw<User[]>`
     UPDATE "User"
     SET "name" = ${user.name},
-        "email" = ${user.email}
+        "email" = ${user.email},
+        "description" = ${user.description}
     WHERE "id" = ${id} 
     RETURNING *;
   `;
