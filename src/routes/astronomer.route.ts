@@ -18,7 +18,6 @@ astronomerRoute.post(
   "/user",
   ensureUserToken,
   ensureBodyExists,
-  ensureIsAdm,
   postUserAstronomerController
 );
 
